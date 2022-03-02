@@ -18,8 +18,6 @@ function Anime(props: Props) {
 
     const [offset, setOffset] = useState(1)
 
-    console.log({items});
-
     useEffect(() => props.fetchAnimes(offset, 10, ""), [])
 
     const debouncedSearch = useRef(
@@ -28,8 +26,18 @@ function Anime(props: Props) {
         }, 300)
     ).current
 
-    async function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
-        debouncedSearch(e.target.value);
+    const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        debouncedSearch(e.target.value)
+    }
+
+    const onScroll = (e: any) => {
+        const div = e.target
+        const divScrollTop = div.scrollTop
+        const limit = div.scrollHeight - div.clientHeight
+        if (divScrollTop > 0 && divScrollTop + 1 > limit) {
+            setOffset(offset+1)
+            props.fetchAnimes(offset, 10, "")
+        }
     }
 
     useEffect(() => {
@@ -44,16 +52,6 @@ function Anime(props: Props) {
             <div>{error}</div>
         );
     }
-
-    const onScroll = (e: any) => {
-        const div = e.target
-        const divScrollTop = div.scrollTop
-        const limit = div.scrollHeight - div.clientHeight
-        if (divScrollTop > 0 && divScrollTop + 1 > limit) {
-            setOffset(offset+1)
-            props.fetchAnimes(offset, 10, "")
-        }
-    };
 
 
     return (
