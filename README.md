@@ -22,4 +22,4 @@ Assuming that you already installed the requirements
 Runs the app in the development mode.<br>
 `$ yarn start`
 
-Open [http://localhost:3000](http://localhost:2022) to view it in the browser.
+Open [http://localhost:2022](http://localhost:2022) to view it in the browser.
